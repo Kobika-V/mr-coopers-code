@@ -1,0 +1,104 @@
+from flask import Flask, request
+
+app = Flask(__name__)
+
+students = {}
+
+def calculate_grade(score):
+    if score >= 90:
+        return 'A'
+    elif score >= 75:
+        return 'B'
+    elif score >= 60:
+        return 'C'
+    elif score >= 50:
+        return 'D'
+    else:
+        return 'F'
+
+
+@app.route('/')
+def home():
+    return """
+    <h2>Student Management System</h2>
+
+    <h3>Add Student</h3>
+    <form action="/add_student" method="post">
+        <input name="name" placeholder="Student Name" required>
+        <button type="submit">Add</button>
+    </form>
+
+    <h3>Add Marks</h3>
+    <form action="/add_marks" method="post">
+        <input name="name" placeholder="Student Name" required>
+        <input name="subject" placeholder="Subject" required>
+        <input name="marks" type="number" placeholder="Marks" required>
+        <button type="submit">Submit</button>
+    </form>
+
+    <br>
+    <a href="/report">View Report</a>
+    """
+
+
+@app.route('/add_student', methods=['POST'])
+def add_student():
+    try:
+        name = request.form.get('name')
+
+        if not name:
+            return "Invalid input <br><a href='/'>Go Back</a>"
+
+        students[name] = {"marks": {}, "grades": {}}
+        return "Student added successfully! <br><a href='/'>Go Back</a>"
+
+    except Exception as e:
+        return f"Error: {str(e)} <br><a href='/'>Go Back</a>"
+
+
+@app.route('/add_marks', methods=['POST'])
+def add_marks():
+    try:
+        name = request.form.get('name')
+        subject = request.form.get('subject')
+        marks = request.form.get('marks')
+
+        if name not in students:
+            return "Student not found <br><a href='/'>Go Back</a>"
+
+        marks = int(marks)
+
+        students[name]["marks"][subject] = marks
+        students[name]["grades"][subject] = calculate_grade(marks)
+
+        return "Marks added successfully! <br><a href='/'>Go Back</a>"
+
+    except Exception as e:
+        return f"Error: {str(e)} <br><a href='/'>Go Back</a>"
+
+
+@app.route('/report')
+def report():
+    try:
+        output = "<h2>Student Report</h2>"
+
+        for name, data in students.items():
+            output += f"<h3>{name}</h3>"
+
+            output += "<b>Marks:</b><br>"
+            for sub, m in data["marks"].items():
+                output += f"{sub}: {m}<br>"
+
+            output += "<b>Grades:</b><br>"
+            for sub, g in data["grades"].items():
+                output += f"{sub}: {g}<br>"
+
+        output += "<br><a href='/'>Go Back</a>"
+        return output
+
+    except Exception as e:
+        return f"Error: {str(e)} <br><a href='/'>Go Back</a>"
+
+
+if __name__ == '__main__':
+    app.run(debug=False)
