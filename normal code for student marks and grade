@@ -1,0 +1,87 @@
+class student:
+    def _init_ (self,student_id,student_name,student_class):
+        self.student_id=student_id
+        self.name= student_name
+        self.marks={}
+        self.grades={}
+          
+    def view_marks(self):
+        print(f"\nmarks for{self.name}:")
+        for subject,mark in
+self.marks.items():
+        print(f"{subject}:{marks})
+    
+    def view_grades(self):
+        print(f"\ngrades for{self.name}:")
+        for subject,grades in
+self.grades.items():
+        print(f"{subject}:{grades})
+
+class Teacher:
+    def _init_(self,teacher_id,name):
+        self.teacher_id=teacher_id
+        self.name=self_name
+    def enter_marks(self,student,subject,score):
+        student.marks[subject]=Score
+        print(f"Marks entered for {student.name} in {subject}")
+    def update_marks(self,student,subject,score):
+        if subject in student.marks:
+            student.marks[subject]=score
+            print(f"Marks updated for {student.name} in {subject}")
+        else:
+            print("Subject not found")
+    def calculate_grade(self,student,subject):
+        if subject not in student.marks:
+            print("Marks not available")
+            return
+        score=student.marks[subject]
+
+        if score >=90:
+           grade ='A'
+        elif score >=75:
+           grade ='B'
+        elif score >=60
+           grade ='C'
+        elif score >=50:
+           grade ='D'
+        else
+           grade='F'
+        
+        student.grades[subject]=grade
+        print(f"Grade calculated for {student.name} in {subject}:{grade}")
+    
+class Admin
+    def _init_ (self,admin_id ,name):
+        self.admin_id=admin_id
+        self.name=student_name
+        self.students=[]
+        self.subjects=[]
+    def add_students(self,students):
+        self.student.append(student)
+        print(f"student{student} added")
+     def add_subjects(self,subject):
+        self.subjects.append(subject)
+        print(f"subject {subject}added")
+    def generate_report(self):
+        print("\n----Report of student ----")
+        for student in self.students:
+            print(f"\n Student:{student.name}")
+            student.view_marks()
+            student.view_grades()
+admin=Admin(1,"Admin")
+s1=Student(101,"samy","10A")
+
+admin_add_student(s1)
+admin.add_subject("Maths")
+admin.add_subjet("Science")
+
+teacher=Teacher(201,"Mr.Kumar")
+teacher.enter_marks(s1,"Maths",88)
+teacher.enter_marks(s2,"Science",92)
+
+teacher.calculate_grade(s1,"Maths")
+teacher.calculate_grade(s2,"Science")
+ s1.view_marks()
+ s2.view_grades()
+
+admin.generate_report()
